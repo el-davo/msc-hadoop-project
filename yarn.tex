@@ -15,7 +15,7 @@ Yarn has a number of of different scheduling options we can choose from. Some op
 \item HaSTE
 \end{itemize}
 
-For the purposes of this paper we will outline the first 3 types of scheduling in .
+Yarns default scheduler is Capacity Scheduler. For the purposes of this paper we will outline the first 3 types of scheduling.
 
 \subsection{First In First Out Scheduler}
 
@@ -29,5 +29,4 @@ The drawback to this approach is that if queue A is empty but queue B has a numb
 
 \subsection{Fair Scheduler}
 
-
-
+This scheduler takes a different approach. Instead of a queue it will allow any job onto the cluster as soon as it has enough resources available. For example say we have 3 jobs A, B and C. A and B start at the same time and are assigned an equal share of the resources. Next job C starts to run and it grabs some of the resources from A and B if they are available. All our jobs are now holding onto an equal share of the resources. Job A finishes and releases its resources which job B and C take up. Finally all jobs finish and their resources are cleared. This allows maximum utilization of our cluster resources.
