@@ -1,0 +1,32 @@
+\section{Yarn}
+
+An acronym for "Yet Another Resource Negotiator", Yarns responsibility is scheduling of jobs on the cluster and was added in version 2.x of Hadoop \cite[pg.1]{yarn-scheduling}.
+
+Yarn is made up of 2 components, the Resource Manager and the Node Manager. The resource manager runs on the master node, while the node manager runs on every node in the cluster. The responsibility of the resource manager is to monitor all resources across the cluster, such as CPU and memory. The node manager is only concerned with monitoring the resources on its current node.
+
+Yarn has a number of of different scheduling options we can choose from. Some options are \cite[pg.2]{yarn-scheduling}
+
+\begin{itemize}
+\item First In First Out Scheduler 
+\item Capacity Scheduler
+\item Fair Scheduler 
+\item Dominant Resource Fairness
+\item Label Based Scheduling
+\item HaSTE
+\end{itemize}
+
+Yarns default scheduler is Capacity Scheduler. For the purposes of this paper we will outline the first 3 types of scheduling.
+
+\subsection{First In First Out Scheduler}
+
+This scheduler is similar to a queue. A good analogy might be that we are waiting in a queue at the bank with only one teller. If we are the third person in the queue we will have to wait for person 1 and then person 2 to complete their transactions before we have access to the teller. 
+There is one major drawback to this approach. One single job no matter how big or small will take up all the resources on the cluster even if some resources are not used. This can result in long waiting times for jobs to complete.
+
+\subsection{Capacity Scheduler}
+
+This is a slightly better approach than FIFO. In capacity scheduler we will have a number of FIFO queues that are assigned resources on the cluster. For example, say we have 2 queues A and B. Queue A is assigned 40\% of the resources on the cluster and queue B is assigned 60\% of the resources. This means that Queue A cannot use any of the resources that queue B owns and vice versa. 
+The drawback to this approach is that if queue A is empty but queue B has a number of scheduled tasks, we are underutilizing our resources, i.e. Queue A's resources are lying idle until such time a new job enters queue A.
+
+\subsection{Fair Scheduler}
+
+This scheduler takes a different approach. Instead of a queue it will allow any job onto the cluster as soon as it has enough resources available. For example say we have 3 jobs A, B and C. A and B start at the same time and are assigned an equal share of the resources. Next job C starts to run and it grabs some of the resources from A and B if they are available. All our jobs are now holding onto an equal share of the resources. Job A finishes and releases its resources which job B and C take up. Finally all jobs finish and their resources are cleared. This allows maximum utilization of our cluster resources.
